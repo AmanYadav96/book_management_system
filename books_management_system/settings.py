@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'book-management-system-amanyadav96s-projects.vercel.app',
-    '127.0.0.1'
+    '127.0.0.1',
+    'book-management-system-omega.vercel.app'
 ]
 
 
