@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-_v+23%_w-e@1=yfi@#s_(t3z&oef4$c2bvv(b_iiq&kj8&d4v2
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://book-management-system-omega.vercel.app/'
+    'https://book-management-system-omega.vercel.app/',
+    '127.0.0.1'
 ]
 
 
