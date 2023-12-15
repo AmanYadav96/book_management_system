@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
        'book',
-       'author'
+       'author',
+       'user'
 ]
 
 MIDDLEWARE = [
