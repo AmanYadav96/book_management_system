@@ -3,8 +3,16 @@
         "src": "books_management_system/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize" : "15mb", "runtime": "python3.12.0" }
+    },{
+        "src": "build_files.sh",
+        "use": "@vercel/static",
+        "config": { "disDir":"staticfiles_build"}
     }],
     "routes": [
+        {
+            "src":"/static/(.*)",
+            "dest":"/static/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "books_management_system/wsgi.py"
