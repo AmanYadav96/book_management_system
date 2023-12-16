@@ -37,7 +37,7 @@ urlpatterns = [
     path('api/user/',include('user.urls')),
     path('api/order/',include('order.urls')),
     path('api/address/',include('address.urls')),
-    path('api/order/history/',include('order_history.urls')),
+    path('api/order_history/',include('order_history.urls')),
     path('api/cart/',include('cart.urls')),
       ]))
 ]
