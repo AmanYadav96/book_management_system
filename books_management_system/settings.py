@@ -26,11 +26,11 @@ SECRET_KEY = 'django-insecure-_v+23%_w-e@1=yfi@#s_(t3z&oef4$c2bvv(b_iiq&kj8&d4v2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = [
-#     'book-management-system-amanyadav96s-projects.vercel.app',
-#     '127.0.0.1',
-#     'book-management-system-omega.vercel.app'
-# ]
+ALLOWED_HOSTS = [
+    'book-management-system-amanyadav96s-projects.vercel.app',
+    '127.0.0.1',
+    'book-management-system-omega.vercel.app'
+]
 CORS_ALLOW_ALL_ORIGINS = True
 
 # CORS_ALLOWED_ORIGINS = [
@@ -38,7 +38,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     "http://192.168.0.7:8000",
 # ]
 
-ROOT_URLCONF = 'hospital_management.urls'
+ROOT_URLCONF = 'books_management_system.urls'
 MEDIA_ROOT = BASE_DIR/'media/'
 
 # Application definition
