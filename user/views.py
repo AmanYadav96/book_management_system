@@ -8,7 +8,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
-from books_management_system.email import send_verification_email
+# from books_management_system.email import send_verification_email
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
