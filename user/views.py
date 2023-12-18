@@ -42,7 +42,7 @@ class UserRegister(GenericAPIView):
             email = request.data.get('user_email')
             serializer.save()
             user_email = User.objects.filter(user_email=email)
-            print(user_email['user_id'])
+            
             # print(user)
            
 
