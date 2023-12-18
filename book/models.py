@@ -14,7 +14,7 @@ class Book(models.Model):
     price = models.BigIntegerField()
     page_count = models.IntegerField()
     rating = models.FloatField(max_length=2)
-    publisher = models.CharField(max_length=225)
+    author = models.CharField(max_length=225)
     edition = models.BigIntegerField()
     is_available = models.BooleanField(default=False)
     is_ebook_available = models.BooleanField(default=False)

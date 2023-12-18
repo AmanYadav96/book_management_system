@@ -32,13 +32,13 @@ get_schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include([path('api_schema', get_schema_view.as_view(), name="api_schema"),path('docs/', TemplateView.as_view(template_name='docs.html',extra_context={'schema_url': 'api_schema'}), name='docs'),
-    path('api/book/',include('book.urls')),
-    path('api/author/',include('author.urls')),
-    path('api/user/',include('user.urls')),
-    path('api/order/',include('order.urls')),
-    path('api/address/',include('address.urls')),
-    path('api/order_history/',include('order_history.urls')),
-    path('api/cart/',include('cart.urls')),
+    path('book/',include('book.urls')),
+    path('author/',include('author.urls')),
+    path('user/',include('user.urls')),
+    path('order/',include('order.urls')),
+    path('address/',include('address.urls')),
+    path('order_history/',include('order_history.urls')),
+    path('cart/',include('cart.urls')),
       ]))
 ]
 

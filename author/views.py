@@ -28,7 +28,7 @@ class AuthorAdd(GenericAPIView):
             )
         
    
-class BookView(APIView):
+class AuthorView(APIView):
    def get(self, request, input = None, format = None):
       id = input
       print(id)
@@ -88,7 +88,7 @@ class AuthorUpdate(APIView):
             },
           )  
    
-class HospitalDelete(APIView):
+class AuthorDelete(APIView):
    def delete(self, request, input, format = None):
       id = input
       if Author.objects.filter(book_id = id).count() >= 1:
