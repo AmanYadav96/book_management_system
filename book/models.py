@@ -4,7 +4,6 @@ from author.models import Author
 
 class Book(models.Model):
     book_id = models.UUIDField(primary_key=True,default=uuid.uuid4(),editable=False)
-    author_id = models.ForeignKey(Author, default = uuid.uuid4, on_delete = models.CASCADE)
     title = models.CharField(max_length=500)
     publication_date = models.DateField()
     ISBN = models.CharField(max_length=13)
