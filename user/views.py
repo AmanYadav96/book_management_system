@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from user.serializer import UserSerializer,UserLoginSerializer
+from user.serializer import UserSerializer,UserLoginSerializer,UserProfileSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 from user.models import User
@@ -8,7 +8,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
-# from books_management_system.email import send_verification_email
+from books_management_system.email import send_verification_email
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -33,7 +33,6 @@ class UserRegister(GenericAPIView):
       
       else:   
             email = request.data.get('user_email')
-            print(email)
             
             
         
@@ -42,9 +41,14 @@ class UserRegister(GenericAPIView):
             email = request.data.get('user_email')
             serializer.save()
             user_email = User.objects.filter(user_email=email)
+            user = User.objects.get(user_email=email)
+            user_id = str(user.user_id)
+            verification_token = get_tokens_for_user(user)
+            url = 'https://book-management-system-omega.vercel.app/api/user/verification/?user_id=' + \
+            user_id + '&token=' + verification_token['access']
+            send_verification_email(url,email)
+
             
-            # print(user)
-           
 
             return Response(
                {
@@ -175,5 +179,19 @@ class UserLogin(GenericAPIView):
                    },
                    )  
 
+class UserVerificationView(APIView):
+    serializer_class = UserProfileSerializer
 
-      
+    def post(self, request, format=None):
+        token = request.POST.get('token')
+        id = request.POST.get('id')
+        print(id, token)
+        user = User.objects.get(user_id=id)
+        user.status = True
+        Response.status_code = status.HTTP_200_OK
+        return Response(
+            {
+                'status': status.HTTP_200_OK,
+                'message': "User Verified",
+            },
+        )

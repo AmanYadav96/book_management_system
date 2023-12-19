@@ -9,4 +9,6 @@ urlpatterns = [
     path('update/<uuid:input>/',UserUpdate.as_view(),name = 'book update by id'),
     path('delete/<uuid:input>/',UserDelete.as_view(),name = 'book delete by id'),
     path('login/',UserLogin.as_view(),name = 'user login'),
+    path('verification/', UserVerificationView().as_view(), name = 'user verification')  
+
 ]

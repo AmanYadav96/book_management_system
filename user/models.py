@@ -42,10 +42,8 @@ class User(AbstractBaseUser):
     user_name = models.CharField(max_length=255)
     user_password = models.CharField(max_length=255)
     user_number = models.CharField(max_length=10)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    user_role = models.CharField(max_length=225)
     is_verify = models.BooleanField(default=False)
-    status = models.BooleanField(default=False)
     objects = UserManager()
 
     USERNAME_FIELD = "user_email"
