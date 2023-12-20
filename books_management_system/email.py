@@ -31,7 +31,7 @@ def send_verification_email(url, user_email):
         print("File not found. Please provide a valid file path.")
 
     new_url = url
-    soup = BeautifulSoup(html_content, 'html.parser.py')
+    soup = BeautifulSoup(html_content, 'html.parser')
     a_tag = soup.find('a')
 
     if a_tag:
