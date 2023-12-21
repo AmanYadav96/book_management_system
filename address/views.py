@@ -3,8 +3,14 @@ from address.serializer import AddressSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 from .models import Address
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView,ListAPIView
 from rest_framework.permissions import IsAuthenticated
+from books_management_system.custom_paginations import CustomPagination
+from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+
 # Create your views here.
 class AddressAdd(GenericAPIView):
     serializer_class = AddressSerializer
@@ -23,6 +29,31 @@ class AddressAdd(GenericAPIView):
         
    
 
+class AddressView(ListAPIView):
+   queryset = Address.objects.all().order_by('-created_at')
+   serializer_class = AddressSerializer
+   filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
+   pagination_class = CustomPagination
+   filterset_fields = []
+   ordering_fields = ['created_at']
+   search_fields = ['created_at']
+  
+   permission_classes = [IsAuthenticated]
+   def list(self, request, *args, **kwargs):
+        response_message = ""
+        response_code = ""
+        response = super().list(request, *args, **kwargs)
+ 
+           
+        return Response(
+               {
+                  'status': status.HTTP_200_OK,
+                  'message': 'order data retrieved successfully',
+                  'data': response.data
+               },
+            )
+
+       
 class AddressView(APIView):
    permission_classes = [IsAuthenticated]
    def get(self, request, input = None, format = None):

@@ -22,7 +22,7 @@ from django.views.generic import TemplateView
 
 get_schema_view = get_schema_view(
     openapi.Info(
-        title="Hospital Management System",
+        title="Book Management System",
         default_version='v1',),
     public=True,
     permission_classes=(permissions.AllowAny,),

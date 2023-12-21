@@ -3,14 +3,19 @@ from book.serializer import BookSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 from .models import Book
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView,ListAPIView
+from books_management_system.custom_paginations import CustomPagination
+from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 class BookAdd(GenericAPIView):
    serializer_class = BookSerializer
 
    def post(self, request, format = None):
       if Book.objects.filter(title = request.data.get('title')).count() >= 1:
-          
+
             return Response(
                {
                   'status': status.HTTP_400_BAD_REQUEST,
@@ -31,11 +36,32 @@ class BookAdd(GenericAPIView):
                },
             )
    
-class BookView(APIView):
+class BookView(ListAPIView):
+   queryset = Book.objects.all().order_by('publication_date')
+   serializer_class = BookSerializer
+   filter_backends = [OrderingFilter, SearchFilter, DjangoFilterBackend]
+   pagination_class = CustomPagination
+   filterset_fields = ['book_id','title','genre','price','rating','author','edition']
+   ordering_fields = ['publication_date','author','title','price','rating','is_available']
+   search_fields = ['created_at','title','genre','price','rating','edition','is_available']
+  
+   def list(self, request, *args, **kwargs):
+        response_message = ""
+        response_code = ""
+        response = super().list(request, *args, **kwargs)
+ 
+           
+        return Response(
+               {
+                  'status': status.HTTP_200_OK,
+                  'message': 'Book data retrieved successfully',
+                  'data': response.data
+               },
+            )
+class BookViewById(APIView):
+   
    def get(self, request, input = None, format = None):
-      id = input
-      print(id)
-      if id is not None :
+    
          if Book.objects.filter(book_id = id).count() >= 1:
             book=Book.objects.get(book_id = id)
             serializer = BookSerializer(book)
@@ -54,19 +80,8 @@ class BookView(APIView):
                   'status': status.HTTP_400_BAD_REQUEST,
                   'message': 'INVALID ID',
                },
-            )  
-      else:
-         book = Book.objects.all()
-         serializer = BookSerializer(book, many = True)
-       
-         return Response(
-            {
-               'status': status.HTTP_200_OK,
-               'message': 'Books data retrieved successfully',
-               'data': serializer.data
-            },
-         )
-      
+    
+            )
 class BookUpdate(APIView):
    def patch(self, request, input, format = None):
       id = input

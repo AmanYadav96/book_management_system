@@ -11,3 +11,4 @@ class Address(models.Model):
     country = models.CharField(max_length=225)
     address = models.CharField(max_length=500)
     address_type = models.CharField(max_length = 50, choices=(('Home', 'Home'),('Office','Office')))
+    created_at = models.DateTimeField(auto_now_add=True)
