@@ -21,7 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def send_verification_email(url, user_email):
-    print('dfghjhgfdrfgytfygytfc')
     html_content = ""
 
     try:

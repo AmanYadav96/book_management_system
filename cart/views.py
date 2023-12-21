@@ -5,10 +5,11 @@ from rest_framework import status
 from rest_framework.views import APIView
 from cart.models import Cart
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
 
 class CartAdd(GenericAPIView):
    serializer_class = CartSerializer
-
+   permission_classes = [IsAuthenticated]
    def post(self, request, format = None):
      
    
@@ -25,6 +26,7 @@ class CartAdd(GenericAPIView):
             )
 
 class CartDelete(APIView):
+   permission_classes = [IsAuthenticated]
    def delete(self, request, input, format = None):
       id = input
       if Cart.objects.filter(cart_id = id).count() >= 1:
@@ -47,6 +49,7 @@ class CartDelete(APIView):
       
   
 class CartView(APIView):
+   permission_classes = [IsAuthenticated]
    def get(self, request, input = None, format = None):
       id = input
       

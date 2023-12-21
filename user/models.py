@@ -65,7 +65,7 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         return self.is_admin
     
-    def save(self, *args, **kwargs):
-        # Hash the password before saving
-        self.user_password = make_password(self.user_password)
+    def save(self, *args, **kwargs):     
+        # self.user_password = make_password(self.user_password)
+  
         super(User, self).save(*args, **kwargs)

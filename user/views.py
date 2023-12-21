@@ -58,6 +58,7 @@ class UserRegister(GenericAPIView):
             )
    
 class UserView(APIView):
+   permission_classes = [IsAuthenticated]
    def get(self, request, input = None, format = None):
       id = input
       print(id)
@@ -94,6 +95,7 @@ class UserView(APIView):
          )
       
 class UserUpdate(APIView):
+   permission_classes = [IsAuthenticated]
    def patch(self, request, input, format = None):
       id = input
       if User.objects.filter(user_id = id).count() >= 1:
@@ -118,6 +120,7 @@ class UserUpdate(APIView):
           )  
    
 class UserDelete(APIView):
+   permission_classes = [IsAuthenticated]
    def delete(self, request, input, format = None):
       id = input
       if User.objects.filter(user_id = id).count() >= 1:
@@ -147,7 +150,7 @@ class UserLogin(GenericAPIView):
       if User.objects.filter(user_email=email).count() >= 1:
             user = User.objects.get(user_email=email)
             if  user.is_verify == True:
-              if user.password == password:
+              if user.user_password == password:
                   token = get_tokens_for_user(user)
                   return Response(
                   {

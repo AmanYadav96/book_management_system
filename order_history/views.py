@@ -5,9 +5,11 @@ from rest_framework import status
 from rest_framework.views import APIView
 from order_history.models import OrderHistory
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
 
 class OrderHistoryAdd(GenericAPIView):
    serializer_class = OrderHistorySerializer
+   permission_classes = [IsAuthenticated]
 
    def post(self, request, format = None):
      
@@ -25,9 +27,10 @@ class OrderHistoryAdd(GenericAPIView):
             )
    
 class OrderHistoryView(APIView):
+   
    def get(self, request, input = None, format = None):
       id = input
-      
+      permission_classes = [IsAuthenticated]
       if id is not None :
          if OrderHistory.objects.filter(order_id = id).count() >= 1:
             order_history=OrderHistory.objects.get(history_id = id)
@@ -61,6 +64,7 @@ class OrderHistoryView(APIView):
          )
       
 class OrderHistoryUpdate(APIView):
+   permission_classes = [IsAuthenticated]
    def patch(self, request, input, format = None):
       id = input
       if OrderHistory.objects.filter(history_id = id).count() >= 1:
@@ -85,6 +89,7 @@ class OrderHistoryUpdate(APIView):
           )  
    
 class OrderHistoryDelete(APIView):
+   permission_classes = [IsAuthenticated]
    def delete(self, request, input, format = None):
       id = input
       if OrderHistory.objects.filter(history_id = id).count() >= 1:

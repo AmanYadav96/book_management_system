@@ -4,10 +4,11 @@ from rest_framework import status
 from rest_framework.views import APIView
 from .models import Address
 from rest_framework.generics import GenericAPIView
-
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 class AddressAdd(GenericAPIView):
     serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
     def post(self, request,format=None):
        
             serializer = AddressSerializer(data = request.data)
@@ -21,7 +22,9 @@ class AddressAdd(GenericAPIView):
             )
         
    
+
 class AddressView(APIView):
+   permission_classes = [IsAuthenticated]
    def get(self, request, input = None, format = None):
       id = input
       print(id)
@@ -58,6 +61,7 @@ class AddressView(APIView):
          )
       
 class AddressUpdate(APIView):
+   permission_classes = [IsAuthenticated]
    def patch(self, request, input, format = None):
       id = input
       if Address.objects.filter(address_id = id).count() >= 1:
@@ -82,6 +86,7 @@ class AddressUpdate(APIView):
           )  
    
 class AddressDelete(APIView):
+   permission_classes = [IsAuthenticated]
    def delete(self, request, input, format = None):
       id = input
       if Address.objects.filter(address_id = id).count() >= 1:
