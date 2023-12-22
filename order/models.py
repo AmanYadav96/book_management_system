@@ -5,9 +5,9 @@ from book.models import Book
 from address.models import Address
 
 class Order(models.Model):
-    order_id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False) 
-    user_id = models.ForeignKey(User, default=uuid.uuid4(), on_delete = models.CASCADE)
-    book_id = models.ForeignKey(Book,default=uuid.uuid4(), on_delete=models.CASCADE)
+    order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) 
+    user_id = models.ForeignKey(User, default=uuid.uuid4, on_delete = models.CASCADE)
+    book_id = models.ForeignKey(Book,default=uuid.uuid4, on_delete=models.CASCADE)
     address_id = models.ForeignKey(Address,default=uuid.uuid4, on_delete=models.CASCADE)
     amount = models.FloatField()
     order_date = models.DateField(auto_now_add=True)

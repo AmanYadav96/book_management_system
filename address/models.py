@@ -3,8 +3,8 @@ import uuid
 from user.models import User
 
 class Address(models.Model):
-    address_id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False) 
-    user_id = models.ForeignKey(User, default=uuid.uuid4(), on_delete= models.CASCADE)
+    address_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) 
+    user_id = models.ForeignKey(User, default=uuid.uuid4, on_delete= models.CASCADE)
     city = models.CharField(max_length=225)
     pincode = models.CharField(max_length=6)
     state = models.CharField(max_length=225)

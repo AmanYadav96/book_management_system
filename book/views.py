@@ -14,7 +14,7 @@ class BookAdd(GenericAPIView):
    serializer_class = BookSerializer
 
    def post(self, request, format = None):
-      if Book.objects.filter(title = request.data.get('title')).count() >= 1:
+      if Book.objects.filter(ISBN = request.data.get('ISBN')).count() >= 1:
 
             return Response(
                {
