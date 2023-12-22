@@ -15,7 +15,7 @@ class BookAdd(GenericAPIView):
 
    def post(self, request, format = None):
       if Book.objects.filter(ISBN = request.data.get('ISBN')).count() >= 1:
-            Response.status_code = 400
+            Response.status_code = status.HTTP_400_BAD_REQUEST
             return Response(
                {
                   'status': status.HTTP_400_BAD_REQUEST,
@@ -27,7 +27,7 @@ class BookAdd(GenericAPIView):
             serializer = BookSerializer(data = request.data)
             serializer.is_valid(raise_exception = True)
             serializer.save()
-            Response.status_code = 200
+            Response.status_code =status.HTTP_200_OK
 
             return Response(
                {
