@@ -186,7 +186,7 @@ class UserLogin(GenericAPIView):
 class UserVerificationView(APIView):
     def post(self, request, format=None):
         token = request.POST.get('token')
-        id = request.POST.get('id')
+        id = request.POST.get('user_id')
         print(id, token)
         user = User.objects.get(user_id=id)
         user.status = True
