@@ -42,7 +42,7 @@ class User(AbstractBaseUser):
     user_name = models.CharField(max_length=255)
     user_password = models.CharField(max_length=255)
     user_number = models.CharField(max_length=10)
-    user_role = models.CharField(max_length=225)
+    user_role = models.CharField(default='user', max_length=225)
     is_verify = models.BooleanField(default=False)
     objects = UserManager()
 
