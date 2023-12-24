@@ -61,7 +61,7 @@ class BookView(ListAPIView):
 class BookViewById(APIView):
    
    def get(self, request, input = None, format = None):
-    
+         id = input
          if Book.objects.filter(book_id = id).count() >= 1:
             book=Book.objects.get(book_id = id)
             serializer = BookSerializer(book)

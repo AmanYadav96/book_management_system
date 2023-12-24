@@ -11,6 +11,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from book.models import Book
 
 class CartAdd(GenericAPIView):
    serializer_class = CartSerializer
@@ -63,22 +64,40 @@ class CartView(ListAPIView):
    search_fields = ['created_at']
   
    permission_classes = [IsAuthenticated]
-   def list(self, request, *args, **kwargs):
+   def list(self, request,id, *args, **kwargs):
         response_message = ""
         response_code = ""
         response = super().list(request, *args, **kwargs)
- 
+        cartss = []
+        carts = Cart.objects.filter(user_id=id)
+        for cart in carts:
+            
+            books_id = cart.book_id.book_id
+            books = Book.objects.filter(book_id=books_id)
+            for book in books:
+                new_dict = {}
+                new_dict = {'book_id': book.book_id,'title': book.title,'publication_date':book.publication_date,'ISBN':book.ISBN,'genre':book.genre,'cover_image':book.cover_image,'summary':book.summary,'price':book.price,'page_count':book.page_count,'rating':book.rating,'author':book.author,'edition':book.edition,'is_available':book.is_available,'is_ebook_available':book.is_ebook_available}
+            cartss.append(new_dict)
+
+
+
+            
+           
+             
+        
+        
+        
            
         return Response(
                {
                   'status': status.HTTP_200_OK,
-                  'message': 'order data retrieved successfully',
-                  'data': response.data
+                  'message': 'cart data retrieved successfully',
+                  'data': cartss
                },
             )
 
        
-    
+   
 
 class CartViewById(APIView):
     permission_classes = [IsAuthenticated] 
