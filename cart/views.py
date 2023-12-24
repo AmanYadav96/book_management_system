@@ -76,18 +76,8 @@ class CartView(ListAPIView):
             books = Book.objects.filter(book_id=books_id)
             for book in books:
                 new_dict = {}
-                new_dict = {'book_id': book.book_id,'title': book.title,'publication_date':book.publication_date,'ISBN':book.ISBN,'genre':book.genre,'cover_image':book.cover_image,'summary':book.summary,'price':book.price,'page_count':book.page_count,'rating':book.rating,'author':book.author,'edition':book.edition,'is_available':book.is_available,'is_ebook_available':book.is_ebook_available}
-            cartss.append(new_dict)
-
-
-
-            
-           
-             
-        
-        
-        
-           
+                new_dict = {'cart_id':cart.cart_id,'book_id': book.book_id,'title': book.title,'publication_date':book.publication_date,'ISBN':book.ISBN,'genre':book.genre,'cover_image':book.cover_image,'summary':book.summary,'price':book.price,'page_count':book.page_count,'rating':book.rating,'author':book.author,'edition':book.edition,'is_available':book.is_available,'is_ebook_available':book.is_ebook_available}
+            cartss.append(new_dict)   
         return Response(
                {
                   'status': status.HTTP_200_OK,
@@ -95,10 +85,6 @@ class CartView(ListAPIView):
                   'data': cartss
                },
             )
-
-       
-   
-
 class CartViewById(APIView):
     permission_classes = [IsAuthenticated] 
     def get(self, request, input = None, format = None):
