@@ -23,7 +23,7 @@ class UserRegister(GenericAPIView):
 
    def post(self, request, format = None):
       if User.objects.filter(user_email = request.data.get('user_email')).count()>=1 :
-          
+            Response.status_code = status.HTTP_400_BAD_REQUEST
             return Response(
                {
                   'status': status.HTTP_400_BAD_REQUEST,
@@ -33,9 +33,6 @@ class UserRegister(GenericAPIView):
       
       else:   
             email = request.data.get('user_email')
-            
-            
-        
             serializer =UserSerializer(data = request.data)
             serializer.is_valid(raise_exception = True)
             email = request.data.get('user_email')
@@ -47,9 +44,7 @@ class UserRegister(GenericAPIView):
             url = 'https://book-management-system-omega.vercel.app/api/user/verification/?user_id=' + \
             user_id + '&token=' + verification_token['access']
             send_verification_email(url,email)
-
-            
-
+            Response.status_code = status.HTTP_200_OK
             return Response(
                {
                   'status': status.HTTP_200_OK,
@@ -66,7 +61,7 @@ class UserView(APIView):
          if User.objects.filter(user_id = id).count() >= 1:
             user=User.objects.get(user_id = id)
             serializer = UserSerializer(user)
-           
+            Response.status_code = status.HTTP_200_OK
            
             return Response(
                {
@@ -76,6 +71,7 @@ class UserView(APIView):
                },
             )
          else:  
+            Response.status_code = status.HTTP_400_BAD_REQUEST
             return Response(
                {
                   'status': status.HTTP_400_BAD_REQUEST,
@@ -85,7 +81,7 @@ class UserView(APIView):
       else:
          user = User.objects.all()
          serializer = UserSerializer(user, many = True)
-       
+         Response.status_code = status.HTTP_200_OK
          return Response(
             {
                'status': status.HTTP_200_OK,
@@ -103,7 +99,7 @@ class UserUpdate(APIView):
          serializer = UserSerializer(user, data = request.data, partial = True)
          serializer.is_valid(raise_exception = True)
          serializer.save() 
-
+         Response.status_code = status.HTTP_200_OK
          return Response(
             {
                'status': status.HTTP_200_OK,
@@ -111,7 +107,7 @@ class UserUpdate(APIView):
             }, 
          )
       else:
-         
+          Response.status_code = status.HTTP_400_BAD_REQUEST
           return Response(
             {
                'status': status.HTTP_400_BAD_REQUEST,
@@ -126,14 +122,15 @@ class UserDelete(APIView):
       if User.objects.filter(user_id = id).count() >= 1:
          user=User.objects.get(user_id = id)
          user.delete()
-      
+         Response.status_code = status.HTTP_200_OK
          return Response(
             {
                'status': status.HTTP_200_OK,
                'message': 'user deleted successfully',
             },
          )  
-      else:  
+      else: 
+         Response.status_code = status.HTTP_400_BAD_REQUEST 
          return Response(
             {
                'status': status.HTTP_400_BAD_REQUEST,
@@ -152,6 +149,7 @@ class UserLogin(GenericAPIView):
             if  user.is_verify == True:
               if user.user_password == password:
                   token = get_tokens_for_user(user)
+                  Response.status_code = status.HTTP_200_OK
                   return Response(
                   {
                      'status': status.HTTP_200_OK,
@@ -161,6 +159,7 @@ class UserLogin(GenericAPIView):
                    },
                       )  
               else:
+                  Response.status_code = status.HTTP_400_BAD_REQUEST
                   return Response(
                   {
                      'status': status.HTTP_400_BAD_REQUEST,
@@ -168,13 +167,15 @@ class UserLogin(GenericAPIView):
                    },
                    )  
             else:
+                Response.status_code = status.HTTP_400_BAD_REQUEST
                 return Response(
                   {
                      'status': status.HTTP_400_BAD_REQUEST,
                       'message': 'Email is not verified please verify your email address',
                    },
                    )         
-      else:          
+      else:  
+           Response.status_code = status.HTTP_400_BAD_REQUEST        
            return Response(
                   {
                      'status': status.HTTP_400_BAD_REQUEST,
@@ -183,8 +184,6 @@ class UserLogin(GenericAPIView):
                    )  
 
 class UserVerificationView(APIView):
-    serializer_class = UserProfileSerializer
-
     def post(self, request, format=None):
         token = request.POST.get('token')
         id = request.POST.get('id')
