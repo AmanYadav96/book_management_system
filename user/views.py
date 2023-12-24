@@ -184,6 +184,7 @@ class UserLogin(GenericAPIView):
                    )  
 
 class UserVerificationView(APIView):
+    serializer_class = UserProfileSerializer
     def post(self, request, format=None):
         token = request.POST.get('token')
         id = request.POST.get('user_id')
