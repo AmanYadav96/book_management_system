@@ -61,4 +61,5 @@ def send_verification_email(url, user_email):
     server.starttls()
     server.login(smtp_username, smtp_password)
     server.sendmail(from_email, to_email, message.as_string())
+    print('Sent mail')
     server.quit()
